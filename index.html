@@ -1,0 +1,325 @@
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Subham Mukherjee's Dynamic Digital Business Card</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  body, html {
+    font-family: 'Poppins', sans-serif;
+    background: #1a1a2e;
+    color: #fff;
+    height: 100%;
+    overflow: hidden;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    perspective: 1000px;
+  }
+  .card {
+    width: 90%;
+    max-width: 800px;
+    height: 450px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transform-style: preserve-3d;
+    transition: all 0.5s ease;
+  }
+  .card-content {
+    padding: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    transition: all 0.5s ease;
+  }
+  .profile {
+    text-align: center;
+    flex: 1;
+    transition: all 0.5s ease;
+  }
+  .profile img {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 0 20px rgba(0, 123, 255, 0.5);
+    transition: all 0.5s ease;
+  }
+  h1 {
+    margin-top: 20px;
+    font-size: 2.5em;
+    font-weight: 600;
+    color: #00fff2;
+    text-shadow: 0 0 10px rgba(0, 255, 242, 0.5);
+    transition: all 0.5s ease;
+  }
+  .title {
+    font-size: 1.2em;
+    color: #ff00d4;
+    margin-top: 5px;
+    transition: all 0.5s ease;
+  }
+  .details {
+    flex: 1;
+    padding-left: 30px;
+    transition: all 0.5s ease;
+  }
+  .details p {
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    transition: all 0.5s ease;
+  }
+  .details p svg {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    fill: #00fff2;
+  }
+  .social-links {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+    transition: all 0.5s ease;
+  }
+  .social-links a {
+    margin: 0 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5em;
+    transition: color 0.3s, transform 0.3s;
+  }
+  .social-links a:hover {
+    color: #00fff2;
+    transform: scale(1.2);
+  }
+  #bg-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+
+  @media (max-width: 768px) {
+    .card {
+      width: 90%;
+      height: auto;
+      max-width: 400px;
+    }
+    .card-content {
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 20px;
+    }
+    .profile, .details {
+      width: 100%;
+      padding: 0;
+    }
+    .profile img {
+      width: 100px;
+      height: 100px;
+    }
+    h1 {
+      font-size: 1.8em;
+      margin-top: 10px;
+    }
+    .title {
+      font-size: 1em;
+    }
+    .details {
+      margin-top: 20px;
+      font-size: 0.9em;
+    }
+    .social-links {
+      margin-top: 20px;
+    }
+    .social-links a {
+      font-size: 1.2em;
+    }
+  }
+  .details a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .details a:hover {
+            color: #00fff2;
+        }
+</style>
+</head>
+<body>
+  <canvas id="bg-canvas"></canvas>
+  <div class="container">
+    <div class="card">
+      <div class="card-content">
+        <div class="profile">
+          <img src="profile.jpg" width="150" height="150">
+          <h1>Subham Mukherjee</h1>
+          <p class="title">Founder, Entrepreneur </p>
+        </div>
+        <div class="details">
+          <p>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z"/>
+                  <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z"/>
+              </svg>
+              <a href="mailto:founder@navaura.in">founder@navaura.in</a>
+          </p>
+          <p>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"/>
+              </svg>
+              <a href="tel:+919073888611">+91-9073888611</a>
+          </p>
+          <p>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"/>
+              </svg>
+              <a href="https://www.google.com/maps/place/Kolkata,+West+Bengal,+India" target="_blank">Kolkata, West Bengal, India</a>
+          </p>
+          <p>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4.083 9h1.946c.089-1.546.383-2.97.837-4.118A6.004 6.004 0 004.083 9zM10 2a8 8 0 100 16 8 8 0 000-16zm0 2c-.076 0-.232.032-.465.262-.238.234-.497.623-.737 1.182-.389.907-.673 2.142-.766 3.556h3.936c-.093-1.414-.377-2.649-.766-3.556-.24-.56-.5-.948-.737-1.182C10.232 4.032 10.076 4 10 4zm3.971 5c-.089-1.546-.383-2.97-.837-4.118A6.004 6.004 0 0115.917 9h-1.946zm-2.003 2H8.032c.093 1.414.377 2.649.766 3.556.24.56.5.948.737 1.182.233.23.389.262.465.262.076 0 .232-.032.465-.262.238-.234.498-.623.737-1.182.389-.907.673-2.142.766-3.556zm1.166 4.118c.454-1.147.748-2.572.837-4.118h1.946a6.004 6.004 0 01-2.783 4.118zm-6.268 0C6.412 13.97 6.118 12.546 6.03 11H4.083a6.004 6.004 0 002.783 4.118z" clip-rule="evenodd"/>
+              </svg>
+              <a href="https://www.navaura.in" target="_blank">www.navaura.in</a>
+          </p>
+          
+          <div class="social-links">
+              <a href="https://www.linkedin.com/in/amisubham" target="_blank">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+              </a>
+              <a href="https://x.com/emilychen_ai" target="_blank">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/Navaura" target="_blank">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+          </a>
+              <a href="https://github.com/emilychen-ai" target="_blank">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Three.js background animation
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('bg-canvas'), antialias: true });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+
+    const geometry = new THREE.TorusGeometry(10, 3, 16, 100);
+    const material = new THREE.MeshBasicMaterial({ color: 0x00fff2, wireframe: true });
+    const torus = new THREE.Mesh(geometry, material);
+    scene.add(torus);
+
+    camera.position.z = 30;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      torus.rotation.x += 0.01;
+      torus.rotation.y += 0.005;
+      torus.rotation.z += 0.01;
+      renderer.render(scene, camera);
+    }
+    animate();
+
+    // Card hover effect
+    const card = document.querySelector('.card');
+    const container = document.querySelector('.container');
+
+    container.addEventListener('mousemove', (e) => {
+      if (window.innerWidth > 768) {
+        let xAxis = (window.innerWidth / 2 - e.pageX) / 25;
+        let yAxis = (window.innerHeight / 2 - e.pageY) / 25;
+        card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+      }
+    });
+
+    container.addEventListener('mouseenter', () => {
+      if (window.innerWidth > 768) {
+        card.style.transition = 'none';
+      }
+    });
+
+    container.addEventListener('mouseleave', () => {
+      if (window.innerWidth > 768) {
+        card.style.transition = 'transform 0.5s ease';
+        card.style.transform = 'rotateY(0deg) rotateX(0deg)';
+      }
+    });
+
+    // Dynamic responsive design
+    function handleResize() {
+      const card = document.querySelector('.card');
+      const cardContent = document.querySelector('.card-content');
+      const profile = document.querySelector('.profile');
+      const profileImg = profile.querySelector('img');
+      const h1 = profile.querySelector('h1');
+      const title = profile.querySelector('.title');
+      const details = document.querySelector('.details');
+      const socialLinks = document.querySelector('.social-links');
+      
+      if (window.innerWidth <= 768) {
+        card.style.width = '90%';
+        card.style.height = 'auto';
+        card.style.maxWidth = '400px';
+        cardContent.style.flexDirection = 'column';
+        cardContent.style.padding = '20px';
+        profile.style.width = '100%';
+        profileImg.style.width = '100px';
+        profileImg.style.height = '100px';
+        h1.style.fontSize = '1.8em';
+        h1.style.marginTop = '10px';
+        title.style.fontSize = '1em';
+        details.style.width = '100%';
+        details.style.paddingLeft = '0';
+        details.style.marginTop = '20px';
+        details.style.fontSize = '0.9em';
+        socialLinks.style.marginTop = '20px';
+        socialLinks.querySelectorAll('a').forEach(a => a.style.fontSize = '1.2em');
+      } else {
+        card.style.width = '90%';
+        card.style.height = '450px';
+        card.style.maxWidth = '800px';
+        cardContent.style.flexDirection = 'row';
+        cardContent.style.padding = '30px';
+        profile.style.width = 'auto';
+        profileImg.style.width = '150px';
+        profileImg.style.height = '150px';
+        h1.style.fontSize = '2.5em';
+        h1.style.marginTop = '20px';
+        title.style.fontSize = '1.2em';
+        details.style.width = 'auto';
+        details.style.paddingLeft = '30px';
+        details.style.marginTop = '0';
+        details.style.fontSize = '1em';
+        socialLinks.style.marginTop = '30px';
+        socialLinks.querySelectorAll('a').forEach(a => a.style.fontSize = '1.5em');
+      }
+
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Call once to set initial layout
+  </script>
+</body></html>
